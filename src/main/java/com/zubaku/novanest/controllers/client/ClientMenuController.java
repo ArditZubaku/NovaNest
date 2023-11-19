@@ -1,10 +1,10 @@
 package com.zubaku.novanest.controllers.client;
 
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-
+import com.zubaku.novanest.models.Model;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 
 public class ClientMenuController implements Initializable {
   public Button dashboardButton;
@@ -16,6 +16,19 @@ public class ClientMenuController implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    dashboardButton.setOnAction(event -> System.out.println("Dashboard button invoked"));
+    addListeners();
+  }
+
+  private void addListeners() {
+    dashboardButton.setOnAction(event -> onDashboard());
+    transactionButton.setOnAction(event -> onTransaction());
+  }
+
+  private void onTransaction() {
+    Model.getInstance().getViewProcessor().getClientSelectedMenuItem().set("Transaction");
+  }
+
+  private void onDashboard() {
+    Model.getInstance().getViewProcessor().getClientSelectedMenuItem().set("Dashboard");
   }
 }

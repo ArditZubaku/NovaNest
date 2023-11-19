@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:id="clientParent"
+            xmlns="http://javafx.com/javafx">
 
     <left>
         <fx:include source="ClientMenu.fxml"/>

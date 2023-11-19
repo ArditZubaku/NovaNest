@@ -1,21 +1,29 @@
 package com.zubaku.novanest.views;
 
 import com.zubaku.novanest.controllers.client.ClientController;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.util.logging.Logger;
-import java.util.logging.Level;
-
 public class ViewProcessor {
   private static final Logger LOGGER = Logger.getLogger(ViewProcessor.class.getName());
+  private final StringProperty clientSelectedMenuItem;
   // Client Views
   private AnchorPane dashboardView;
   private AnchorPane transactionsView;
 
-  public ViewProcessor() {}
+  public ViewProcessor() {
+    this.clientSelectedMenuItem = new SimpleStringProperty();
+  }
+
+  public StringProperty getClientSelectedMenuItem() {
+    return clientSelectedMenuItem;
+  }
 
   public AnchorPane getDashboardView() {
     if (dashboardView == null) {
