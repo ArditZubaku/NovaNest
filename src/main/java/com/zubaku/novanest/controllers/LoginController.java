@@ -1,8 +1,13 @@
 package com.zubaku.novanest.controllers;
 
+import com.zubaku.novanest.models.Model;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
-public class LoginController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LoginController implements Initializable {
   public ChoiceBox accountSelector;
   public Label payeeAddressLabel;
   public TextField payeeAddressField;
@@ -10,4 +15,9 @@ public class LoginController {
   public PasswordField passwordField;
   public Button loginButton;
   public Label errorLabel;
+
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    loginButton.setOnAction(event -> Model.getInstance().getViewProcessor().showClientWindow());
+  }
 }
