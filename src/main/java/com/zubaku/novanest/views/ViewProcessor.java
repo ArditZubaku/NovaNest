@@ -13,6 +13,7 @@ public class ViewProcessor {
   private static final Logger LOGGER = Logger.getLogger(ViewProcessor.class.getName());
   // Client Views
   private AnchorPane dashboardView;
+  private AnchorPane transactionsView;
 
   public ViewProcessor() {}
 
@@ -26,6 +27,18 @@ public class ViewProcessor {
       }
     }
     return dashboardView;
+  }
+
+  public AnchorPane getTransactionsView() {
+    if (transactionsView == null) {
+      try {
+        transactionsView =
+            new FXMLLoader(getClass().getResource("/fxml/client/Transactions.fxml")).load();
+      } catch (Exception e) {
+        LOGGER.log(Level.SEVERE, "Error loading transactions view", e);
+      }
+    }
+    return transactionsView;
   }
 
   public void showLoginWindow() {

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="750.0" prefWidth="850.0" styleClass="transactions_container"
+            stylesheets="@../../styles/transactions.css" xmlns="http://javafx.com/javafx/21.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.zubaku.novanest.controllers.client.TransactionController">
+   <Text layoutX="328.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transactions"
+         AnchorPane.leftAnchor="328.0" AnchorPane.topAnchor="15.0"/>
+   <ListView fx:id="transactionsListView" layoutX="14.0" layoutY="51.0" prefHeight="680.0" prefWidth="820.0"
+             AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0"
+             AnchorPane.topAnchor="100.0"/>
+</AnchorPane>
