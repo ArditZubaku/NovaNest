@@ -52,4 +52,8 @@ public class ViewProcessor {
     stage.setTitle("NovaNest Bank");
     stage.show();
   }
+
+  public void closeStage(Stage stage) {
+    stage.close();
+  }
 }
