@@ -16,6 +16,7 @@ public class ViewProcessor {
   // Client Views
   private AnchorPane dashboardView;
   private AnchorPane transactionsView;
+  private AnchorPane accountsView;
 
   public ViewProcessor() {
     this.clientSelectedMenuItem = new SimpleStringProperty();
@@ -29,7 +30,7 @@ public class ViewProcessor {
     if (dashboardView == null) {
       try {
         dashboardView =
-            new FXMLLoader(getClass().getResource("/fxml/client/Dashboard.fxml")).load();
+            new FXMLLoader(getClass().getResource("/views/client/Dashboard.fxml")).load();
       } catch (Exception e) {
         LOGGER.log(Level.SEVERE, "Error loading dashboard view", e);
       }
@@ -41,7 +42,7 @@ public class ViewProcessor {
     if (transactionsView == null) {
       try {
         transactionsView =
-            new FXMLLoader(getClass().getResource("/fxml/client/Transactions.fxml")).load();
+            new FXMLLoader(getClass().getResource("/views/client/Transactions.fxml")).load();
       } catch (Exception e) {
         LOGGER.log(Level.SEVERE, "Error loading transactions view", e);
       }
@@ -49,13 +50,24 @@ public class ViewProcessor {
     return transactionsView;
   }
 
+  public AnchorPane getAccountsView() {
+    if (accountsView == null) {
+      try {
+        accountsView = new FXMLLoader(getClass().getResource("/views/client/Accounts.fxml")).load();
+      } catch (Exception e) {
+        LOGGER.log(Level.SEVERE, "Error loading accounts view", e);
+      }
+    }
+    return accountsView;
+  }
+
   public void showLoginWindow() {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
     createStage(loader);
   }
 
   public void showClientWindow() {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/Client.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/client/Client.fxml"));
     ClientController clientController = new ClientController();
     loader.setController(clientController);
     createStage(loader);
