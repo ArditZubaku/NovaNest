@@ -1,6 +1,7 @@
 package com.zubaku.novanest.controllers.admin;
 
 import com.zubaku.novanest.models.Model;
+import com.zubaku.novanest.utils.enums.AdminMenuOptions;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
@@ -23,6 +24,9 @@ public class AdminMenuController implements Initializable {
   }
 
   private void onCreateClient() {
-    Model.getInstance().getViewProcessor().getAdminSelectedMenuItem().set("Create Client ");
+    Model.getInstance()
+        .getViewProcessor()
+        .getAdminSelectedMenuItem()
+        .set(AdminMenuOptions.CREATE_CLIENT);
   }
 }

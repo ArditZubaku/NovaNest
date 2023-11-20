@@ -3,6 +3,8 @@ package com.zubaku.novanest.controllers.client;
 import com.zubaku.novanest.models.Model;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.zubaku.novanest.utils.enums.ClientMenuOptions;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
@@ -26,14 +28,23 @@ public class ClientMenuController implements Initializable {
   }
 
   private void onTransaction() {
-    Model.getInstance().getViewProcessor().getClientSelectedMenuItem().set("Transaction");
+    Model.getInstance()
+        .getViewProcessor()
+        .getClientSelectedMenuItem()
+        .set(ClientMenuOptions.TRANSACTIONS);
   }
 
   private void onDashboard() {
-    Model.getInstance().getViewProcessor().getClientSelectedMenuItem().set("Dashboard");
+    Model.getInstance()
+        .getViewProcessor()
+        .getClientSelectedMenuItem()
+        .set(ClientMenuOptions.DASHBOARD);
   }
 
   private void onAccounts() {
-    Model.getInstance().getViewProcessor().getClientSelectedMenuItem().set("Accounts");
+    Model.getInstance()
+        .getViewProcessor()
+        .getClientSelectedMenuItem()
+        .set(ClientMenuOptions.ACCOUNTS);
   }
 }

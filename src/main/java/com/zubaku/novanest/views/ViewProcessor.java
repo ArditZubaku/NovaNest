@@ -2,10 +2,13 @@ package com.zubaku.novanest.views;
 
 import com.zubaku.novanest.controllers.admin.AdminController;
 import com.zubaku.novanest.controllers.client.ClientController;
+import com.zubaku.novanest.utils.enums.AccountType;
+import com.zubaku.novanest.utils.enums.AdminMenuOptions;
+import com.zubaku.novanest.utils.enums.ClientMenuOptions;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -13,26 +16,38 @@ import javafx.stage.Stage;
 
 public class ViewProcessor {
   private static final Logger LOGGER = Logger.getLogger(ViewProcessor.class.getName());
+
+  private AccountType logInAccountType;
+
   // Client Views
-  private final StringProperty clientSelectedMenuItem;
+  private final ObjectProperty<ClientMenuOptions> clientSelectedMenuItem;
   private AnchorPane dashboardView;
   private AnchorPane transactionsView;
   private AnchorPane accountsView;
 
   // Admin Views
-  private final StringProperty adminSelectedMenuItem;
+  private final ObjectProperty<AdminMenuOptions> adminSelectedMenuItem;
   private AnchorPane createClientView;
 
   public ViewProcessor() {
-    this.clientSelectedMenuItem = new SimpleStringProperty();
-    this.adminSelectedMenuItem = new SimpleStringProperty();
+    this.logInAccountType = AccountType.CLIENT;
+    this.clientSelectedMenuItem = new SimpleObjectProperty<>();
+    this.adminSelectedMenuItem = new SimpleObjectProperty<>();
+  }
+
+  public AccountType getLogInAccountType() {
+    return logInAccountType;
+  }
+
+  public void setLogInAccountType(AccountType logInAccountType) {
+    this.logInAccountType = logInAccountType;
   }
 
   /*
    * Client Views Section
    */
 
-  public StringProperty getClientSelectedMenuItem() {
+  public ObjectProperty<ClientMenuOptions> getClientSelectedMenuItem() {
     return clientSelectedMenuItem;
   }
 
@@ -82,7 +97,7 @@ public class ViewProcessor {
    * Admin Views Section
    */
 
-  public StringProperty getAdminSelectedMenuItem() {
+  public ObjectProperty<AdminMenuOptions> getAdminSelectedMenuItem() {
     return adminSelectedMenuItem;
   }
 
