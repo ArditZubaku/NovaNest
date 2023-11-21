@@ -11,6 +11,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -157,6 +158,8 @@ public class ViewProcessor {
       LOGGER.log(Level.SEVERE, "Error creating stage", e);
     }
     Stage stage = new Stage();
+    stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/images/icon.png"))));
+    stage.setResizable(false);
     stage.setScene(scene);
     stage.setTitle("NovaNest Bank");
     stage.show();
