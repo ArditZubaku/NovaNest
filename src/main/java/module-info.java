@@ -13,6 +13,6 @@ module com.zubaku.novanest {
   exports com.zubaku.novanest.controllers.admin;
   exports com.zubaku.novanest.controllers.client;
   exports com.zubaku.novanest.models;
-  exports com.zubaku.novanest.views;
+  exports com.zubaku.novanest.processors;
   exports com.zubaku.novanest.utils.enums;
 }

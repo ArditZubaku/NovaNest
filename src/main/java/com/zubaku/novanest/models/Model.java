@@ -1,6 +1,6 @@
 package com.zubaku.novanest.models;
 
-import com.zubaku.novanest.views.ViewProcessor;
+import com.zubaku.novanest.processors.ViewProcessor;
 
 public class Model {
   private final ViewProcessor viewProcessor;

@@ -1,4 +1,4 @@
-package com.zubaku.novanest.views;
+package com.zubaku.novanest.processors;
 
 import com.zubaku.novanest.controllers.admin.AdminController;
 import com.zubaku.novanest.controllers.client.ClientController;

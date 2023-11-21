@@ -1,5 +1,6 @@
 package com.zubaku.novanest.controllers.client;
 
+import com.zubaku.novanest.models.Client;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,8 +17,12 @@ public class ClientCellController implements Initializable {
   public Label lastNameLabel;
   public Label firstNameLabel;
 
-  @Override
-    public void initialize(URL location, ResourceBundle resources) {
+  private final Client client;
 
-    }
+  public ClientCellController(Client client) {
+    this.client = client;
+  }
+
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {}
 }

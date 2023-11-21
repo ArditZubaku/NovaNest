@@ -9,7 +9,6 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.zubaku.novanest.controllers.client.ClientCellController"
             prefHeight="50.0" prefWidth="750.0">
     <FontAwesomeIconView glyphName="USER" layoutX="15.0" layoutY="30.0" size="20" AnchorPane.leftAnchor="15"
                          AnchorPane.topAnchor="15"/>

@@ -1,4 +1,4 @@
-package com.zubaku.novanest.views;
+package com.zubaku.novanest.processors;
 
 import com.zubaku.novanest.controllers.client.TransactionCellController;
 import com.zubaku.novanest.models.Transaction;
