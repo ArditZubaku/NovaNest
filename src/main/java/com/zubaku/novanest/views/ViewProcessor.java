@@ -28,6 +28,7 @@ public class ViewProcessor {
   // Admin Views
   private final ObjectProperty<AdminMenuOptions> adminSelectedMenuItem;
   private AnchorPane createClientView;
+  private AnchorPane clientsView;
 
   public ViewProcessor() {
     this.logInAccountType = AccountType.CLIENT;
@@ -105,12 +106,23 @@ public class ViewProcessor {
     if (createClientView == null) {
       try {
         createClientView =
-            new FXMLLoader(getClass().getResource("/views/client/CreateClient.fxml")).load();
+            new FXMLLoader(getClass().getResource("/views/admin/CreateClient.fxml")).load();
       } catch (Exception e) {
         LOGGER.log(Level.SEVERE, "Error loading createClient view", e);
       }
     }
     return createClientView;
+  }
+
+  public AnchorPane getClientsView() {
+    if (clientsView == null) {
+      try {
+        clientsView = new FXMLLoader(getClass().getResource("/views/admin/Clients.fxml")).load();
+      } catch (Exception e) {
+        LOGGER.log(Level.SEVERE, "Error loading clients view", e);
+      }
+    }
+    return clientsView;
   }
 
   public void showAdminWindow() {

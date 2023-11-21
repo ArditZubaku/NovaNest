@@ -18,6 +18,12 @@ public class AdminController implements Initializable {
         .addListener(
             (observable, oldValue, newValue) -> {
               // TODO: Add switch statement
+              switch (newValue) {
+                case CLIENTS -> adminParent.setCenter(
+                    Model.getInstance().getViewProcessor().getClientsView());
+                default -> adminParent.setCenter(
+                    Model.getInstance().getViewProcessor().getCreateClientView());
+              }
             });
   }
 }
