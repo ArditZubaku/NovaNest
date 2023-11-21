@@ -29,6 +29,7 @@ public class ViewProcessor {
   private final ObjectProperty<AdminMenuOptions> adminSelectedMenuItem;
   private AnchorPane createClientView;
   private AnchorPane clientsView;
+  private AnchorPane depositView;
 
   public ViewProcessor() {
     this.logInAccountType = AccountType.CLIENT;
@@ -123,6 +124,17 @@ public class ViewProcessor {
       }
     }
     return clientsView;
+  }
+
+  public AnchorPane getDepositView() {
+    if (depositView == null) {
+      try {
+        depositView = new FXMLLoader(getClass().getResource("/views/admin/Deposit.fxml")).load();
+      } catch (Exception e) {
+        LOGGER.log(Level.SEVERE, "Error loading deposit view", e);
+      }
+    }
+    return depositView;
   }
 
   public void showAdminWindow() {
