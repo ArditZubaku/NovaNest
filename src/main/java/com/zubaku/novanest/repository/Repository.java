@@ -3,6 +3,7 @@ package com.zubaku.novanest.repository;
 import com.zubaku.novanest.processors.ViewProcessor;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,5 +62,29 @@ public class Repository {
       LOGGER.log(Level.SEVERE, "Error getting admin data", e);
     }
     return resultSet;
+  }
+
+  public void createClient(
+      String firstName, String lastName, String payeeAddress, String password, LocalDate date) {
+    Statement statement;
+    try {
+      statement = this.connection.createStatement();
+      //      statement.executeUpdate("CREATE TABLE IF NOT EXISTS Clients");
+      statement.executeUpdate(
+          "INSERT INTO Clients(FirstName, LastName, PayeeAddress, Password, Date)"
+              + "VALUES ('"
+              + firstName
+              + "', '"
+              + lastName
+              + "','"
+              + payeeAddress
+              + "','"
+              + password
+              + "','"
+              + date.toString()
+              + "')");
+    } catch (SQLException e) {
+      LOGGER.log(Level.SEVERE, "Error creating client", e);
+    }
   }
 }
