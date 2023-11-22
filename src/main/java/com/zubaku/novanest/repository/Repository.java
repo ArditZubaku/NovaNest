@@ -87,4 +87,25 @@ public class Repository {
       LOGGER.log(Level.SEVERE, "Error creating client", e);
     }
   }
+
+  public void createCheckingAccount(
+      String owner, String accountNumber, double transactionLimit, double balance) {
+    Statement statement;
+    try {
+      statement = this.connection.createStatement();
+      statement.executeUpdate(
+          "INSERT INTO CheckingAccounts (Owner, AccountNumber, TransactionLimit, Balance)"
+              + "VALUES ('"
+              + owner
+              + "','"
+              + accountNumber
+              + "','"
+              + transactionLimit
+              + "','"
+              + balance
+              + "')");
+    } catch (SQLException e) {
+      LOGGER.log(Level.SEVERE, "Error creating Checking account", e);
+    }
+  }
 }
