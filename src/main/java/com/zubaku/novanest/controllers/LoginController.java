@@ -46,15 +46,23 @@ public class LoginController implements Initializable {
           .evaluateClientCredentials(payeeAddressField.getText(), passwordField.getText());
       if (Model.getInstance().isClientLoggedInSuccessfully()) {
         Model.getInstance().getViewProcessor().showClientWindow();
-        // Close the login stage
-        Model.getInstance().getViewProcessor().closeStage(stage);
       } else {
         payeeAddressField.setText(null);
         passwordField.setText(null);
-        errorLabel.setText("Wrong credentials!");
+        errorLabel.setText("Wrong credentials! Please try again.");
       }
     } else {
-      Model.getInstance().getViewProcessor().showAdminWindow();
+      Model.getInstance()
+          .evaluateAdminCredentials(payeeAddressField.getText(), passwordField.getText());
+      if (Model.getInstance().isAdminLoggedInSuccessfully()) {
+        Model.getInstance().getViewProcessor().showAdminWindow();
+      } else {
+        payeeAddressField.setText(null);
+        passwordField.setText(null);
+        errorLabel.setText("Wrong credentials! Please try again.");
+      }
     }
+    // Close the login stage
+    Model.getInstance().getViewProcessor().closeStage(stage);
   }
 }

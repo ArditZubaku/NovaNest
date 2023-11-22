@@ -1,7 +1,7 @@
 package com.zubaku.novanest.models;
 
 import com.zubaku.novanest.processors.ViewProcessor;
-import com.zubaku.novanest.repository.DatabaseDriver;
+import com.zubaku.novanest.repository.Repository;
 import com.zubaku.novanest.utils.enums.AccountType;
 
 import java.sql.ResultSet;
@@ -10,24 +10,26 @@ import java.time.LocalDate;
 
 public class Model {
   private final ViewProcessor viewProcessor;
-  private final DatabaseDriver databaseDriver;
+  private final Repository repository;
   private AccountType loginAccountType = AccountType.CLIENT;
   // Client data section
   private final Client client;
   private boolean clientLoggedInSuccessfully;
 
   // Admin data section
+  private boolean adminLoggedInSuccessfully;
 
   // Private constructor.
   private Model() {
     this.viewProcessor = new ViewProcessor();
-    this.databaseDriver = new DatabaseDriver();
+    this.repository = new Repository();
 
     // Client data section
     this.clientLoggedInSuccessfully = false;
     this.client = new Client("", "", "", null, null, null);
-    // Admin data section
 
+    // Admin data section
+    this.adminLoggedInSuccessfully = false;
   }
 
   // Static inner class for holding the instance.
@@ -44,7 +46,7 @@ public class Model {
     CheckingAccount checkingAccount;
     SavingsAccount savingsAccount;
 
-    ResultSet resultSet = databaseDriver.getClientData(payeeAddress, password);
+    ResultSet resultSet = repository.getClientData(payeeAddress, password);
 
     try {
       if (resultSet.isBeforeFirst()) {
@@ -68,12 +70,26 @@ public class Model {
     }
   }
 
+  public void evaluateAdminCredentials(String username, String password) {
+    ResultSet resultSet = repository.getAdminData(username, password);
+
+    try {
+      if (resultSet.isBeforeFirst()) {
+        while (resultSet.next()) {
+          this.adminLoggedInSuccessfully = true;
+        }
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   public ViewProcessor getViewProcessor() {
     return viewProcessor;
   }
 
-  public DatabaseDriver getDatabaseDriver() {
-    return databaseDriver;
+  public Repository getRepository() {
+    return repository;
   }
 
   public AccountType getLoginAccountType() {
@@ -94,5 +110,13 @@ public class Model {
 
   public void setClientLoggedInSuccessfully(boolean clientLoggedInSuccessfully) {
     this.clientLoggedInSuccessfully = clientLoggedInSuccessfully;
+  }
+
+  public boolean isAdminLoggedInSuccessfully() {
+    return adminLoggedInSuccessfully;
+  }
+
+  public void setAdminLoggedInSuccessfully(boolean adminLoggedInSuccessfully) {
+    this.adminLoggedInSuccessfully = adminLoggedInSuccessfully;
   }
 }
