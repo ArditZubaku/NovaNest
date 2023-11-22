@@ -38,6 +38,8 @@ public class LoginController implements Initializable {
       Model.getInstance()
           .evaluateClientCredentials(payeeAddressField.getText(), passwordField.getText());
       if (Model.getInstance().isClientLoggedInSuccessfully()) {
+        // Close the login stage
+        Model.getInstance().getViewProcessor().closeStage(stage);
         Model.getInstance().getViewProcessor().showClientWindow();
       } else {
         payeeAddressField.setText(null);
@@ -48,6 +50,8 @@ public class LoginController implements Initializable {
       Model.getInstance()
           .evaluateAdminCredentials(payeeAddressField.getText(), passwordField.getText());
       if (Model.getInstance().isAdminLoggedInSuccessfully()) {
+        // Close the login stage
+        Model.getInstance().getViewProcessor().closeStage(stage);
         Model.getInstance().getViewProcessor().showAdminWindow();
       } else {
         payeeAddressField.setText(null);
@@ -55,8 +59,6 @@ public class LoginController implements Initializable {
         errorLabel.setText("Wrong credentials! Please try again.");
       }
     }
-    // Close the login stage
-    Model.getInstance().getViewProcessor().closeStage(stage);
   }
 
   private void setAccountSelector() {

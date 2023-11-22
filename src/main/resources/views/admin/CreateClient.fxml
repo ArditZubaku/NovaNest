@@ -35,6 +35,6 @@
         <Text layoutX="10.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Savings Account Balance:"/>
         <TextField fx:id="savingsAccountBalanceAmountTextField" layoutX="10.0" layoutY="250.0"/>
         <Button fx:id="createNewClientButton" mnemonicParsing="false" text="Create New Client"/>
-        <Label fx:id="s" layoutX="10.0" layoutY="178.0" styleClass="error_label" text="error"/>
+        <Label fx:id="errorLabel" layoutX="10.0" layoutY="178.0" styleClass="error_label"/>
     </VBox>
 </AnchorPane>
