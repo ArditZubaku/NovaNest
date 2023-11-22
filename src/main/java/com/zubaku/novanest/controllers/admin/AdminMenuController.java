@@ -4,6 +4,7 @@ import com.zubaku.novanest.models.Model;
 import com.zubaku.novanest.utils.enums.AdminMenuOptions;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,6 +24,7 @@ public class AdminMenuController implements Initializable {
     createClientButton.setOnAction(event -> onCreateClient());
     clientsButton.setOnAction(event -> onClients());
     depositButton.setOnAction(event -> onDeposit());
+    logoutButton.setOnAction(event -> onLogout());
   }
 
   private void onCreateClient() {
@@ -38,5 +40,12 @@ public class AdminMenuController implements Initializable {
 
   private void onDeposit() {
     Model.getInstance().getViewProcessor().getAdminSelectedMenuItem().set(AdminMenuOptions.DEPOSIT);
+  }
+
+  private void onLogout() {
+    Stage stage = (Stage) logoutButton.getScene().getWindow();
+    Model.getInstance().getViewProcessor().closeStage(stage);
+    Model.getInstance().getViewProcessor().showLoginWindow();
+    Model.getInstance().setAdminLoggedInSuccessfully(false);
   }
 }
