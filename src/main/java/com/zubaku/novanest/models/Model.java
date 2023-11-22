@@ -11,7 +11,6 @@ import java.time.LocalDate;
 public class Model {
   private final ViewProcessor viewProcessor;
   private final Repository repository;
-  private AccountType loginAccountType = AccountType.CLIENT;
   // Client data section
   private final Client client;
   private boolean clientLoggedInSuccessfully;
@@ -90,14 +89,6 @@ public class Model {
 
   public Repository getRepository() {
     return repository;
-  }
-
-  public AccountType getLoginAccountType() {
-    return loginAccountType;
-  }
-
-  public void setLoginAccountType(AccountType loginAccountType) {
-    this.loginAccountType = loginAccountType;
   }
 
   public Client getClient() {

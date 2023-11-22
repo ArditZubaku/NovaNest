@@ -3,7 +3,6 @@ package com.zubaku.novanest.controllers;
 import com.zubaku.novanest.models.Model;
 import com.zubaku.novanest.utils.enums.AccountType;
 import javafx.collections.FXCollections;
-import javafx.collections.ModifiableObservableListBase;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -28,13 +27,7 @@ public class LoginController implements Initializable {
     // Default value
     accountSelector.setValue(Model.getInstance().getViewProcessor().getLogInAccountType());
     // Update the value every time we change the selection
-    accountSelector
-        .valueProperty()
-        .addListener(
-            observable ->
-                Model.getInstance()
-                    .getViewProcessor()
-                    .setLogInAccountType(accountSelector.getValue()));
+    accountSelector.valueProperty().addListener(observable -> setAccountSelector());
     loginButton.setOnAction(event -> onLogin());
   }
 
@@ -64,5 +57,14 @@ public class LoginController implements Initializable {
     }
     // Close the login stage
     Model.getInstance().getViewProcessor().closeStage(stage);
+  }
+
+  private void setAccountSelector() {
+    Model.getInstance().getViewProcessor().setLogInAccountType(accountSelector.getValue());
+    if (accountSelector.getValue() == AccountType.ADMIN) {
+      payeeAddressLabel.setText("Username:");
+    } else {
+      payeeAddressLabel.setText("Payee Address:");
+    }
   }
 }
