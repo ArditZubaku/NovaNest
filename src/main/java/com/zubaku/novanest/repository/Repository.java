@@ -108,4 +108,25 @@ public class Repository {
       LOGGER.log(Level.SEVERE, "Error creating Checking account", e);
     }
   }
+
+  public void createSavingsAccount(
+      String owner, String accountNumber, double withdrawalLimit, double balance) {
+    Statement statement;
+    try {
+      statement = this.connection.createStatement();
+      statement.executeUpdate(
+          "INSERT INTO SavingsAccounts (Owner, AccountNumber, WithdrawalLimit, Balance)"
+              + "VALUES ('"
+              + owner
+              + "','"
+              + accountNumber
+              + "','"
+              + withdrawalLimit
+              + "','"
+              + balance
+              + "')");
+    } catch (SQLException e) {
+      LOGGER.log(Level.SEVERE, "Error creating Savings account", e);
+    }
+  }
 }
