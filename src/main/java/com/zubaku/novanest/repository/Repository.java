@@ -37,6 +37,7 @@ public class Repository {
                   + password
                   + "'");
     } catch (SQLException e) {
+      LOGGER.log(Level.SEVERE, "Error getting client data", e);
     }
     return resultSet;
   }
@@ -128,5 +129,22 @@ public class Repository {
     } catch (SQLException e) {
       LOGGER.log(Level.SEVERE, "Error creating Savings account", e);
     }
+  }
+
+  /*
+   * Utility methods
+   */
+  public int getLastClientsID() {
+    Statement statement;
+    ResultSet resultSet = null;
+    int id = 0;
+    try {
+      statement = this.connection.createStatement();
+      resultSet = statement.executeQuery("SELECT * FROM sqlite_sequence WHERE name='Clients';");
+      id = resultSet.getInt("seq");
+    } catch (SQLException e) {
+      LOGGER.log(Level.SEVERE, "Error getting clients ID", e);
+    }
+    return id;
   }
 }
