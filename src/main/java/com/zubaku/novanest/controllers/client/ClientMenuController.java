@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import com.zubaku.novanest.utils.enums.ClientMenuOptions;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 public class ClientMenuController implements Initializable {
   public Button dashboardButton;
@@ -25,6 +26,7 @@ public class ClientMenuController implements Initializable {
     dashboardButton.setOnAction(event -> onDashboard());
     transactionButton.setOnAction(event -> onTransaction());
     accountsButton.setOnAction(event -> onAccounts());
+    logoutButton.setOnAction(event -> onLogout());
   }
 
   private void onTransaction() {
@@ -46,5 +48,12 @@ public class ClientMenuController implements Initializable {
         .getViewProcessor()
         .getClientSelectedMenuItem()
         .set(ClientMenuOptions.ACCOUNTS);
+  }
+
+  private void onLogout() {
+    Stage stage = (Stage) logoutButton.getScene().getWindow();
+    Model.getInstance().getViewProcessor().closeStage(stage);
+    Model.getInstance().getViewProcessor().showLoginWindow();
+    Model.getInstance().setClientLoggedInSuccessfully(false);
   }
 }

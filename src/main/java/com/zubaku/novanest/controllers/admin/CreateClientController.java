@@ -20,8 +20,9 @@ public class CreateClientController implements Initializable {
   public CheckBox addSavingsAccountCheckBox;
   public TextField savingsAccountBalanceAmountTextField;
   public Button createNewClientButton;
+  public Label errorLabel;
 
-  @Override
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
