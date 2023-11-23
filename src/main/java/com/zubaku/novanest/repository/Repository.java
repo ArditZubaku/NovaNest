@@ -143,6 +143,20 @@ public class Repository {
     return resultSet;
   }
 
+  public ResultSet searchClient(String payeeAddress) {
+    Statement statement;
+    ResultSet resultSet = null;
+    try {
+      statement = this.connection.createStatement();
+      resultSet =
+          statement.executeQuery("SELECT * FROM Client WHERE PayeeAddress='" + payeeAddress + "';");
+    } catch (SQLException e) {
+      LOGGER.log(Level.SEVERE, "Error searching client", e);
+    }
+
+    return resultSet;
+  }
+
   /*
    * Utility methods
    */
