@@ -159,4 +159,32 @@ public class Repository {
     }
     return id;
   }
+
+  public ResultSet getCheckingAccountData(String payeeAddress) {
+    Statement statement;
+    ResultSet resultSet = null;
+    try {
+      statement = this.connection.createStatement();
+      resultSet =
+          statement.executeQuery(
+              "SELECT * FROM CheckingAccounts WHERE Owners = '" + payeeAddress + "'");
+    } catch (SQLException e) {
+      LOGGER.log(Level.SEVERE, "Error getting checking account data", e);
+    }
+    return resultSet;
+  }
+
+  public ResultSet getSavingsAccountData(String payeeAddress) {
+    Statement statement;
+    ResultSet resultSet = null;
+    try {
+      statement = this.connection.createStatement();
+      resultSet =
+          statement.executeQuery(
+              "SELECT * FROM SavingsAccounts WHERE Owners = '" + payeeAddress + "'");
+    } catch (SQLException e) {
+      LOGGER.log(Level.SEVERE, "Error getting checking account data", e);
+    }
+    return resultSet;
+  }
 }
