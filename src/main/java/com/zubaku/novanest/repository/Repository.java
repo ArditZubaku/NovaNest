@@ -42,6 +42,25 @@ public class Repository {
     return resultSet;
   }
 
+  public ResultSet getClientTransactions(String payeeAddress, int limit) {
+    Statement statement;
+    ResultSet resultSet = null;
+    try {
+      statement = this.connection.createStatement();
+      resultSet =
+          statement.executeQuery(
+              "SELECT * FROM Transactions WHERE Sender = '"
+                  + payeeAddress
+                  + "' OR Receiver = '"
+                  + payeeAddress
+                  + "' LIMIT "
+                  + limit);
+    } catch (SQLException e) {
+      LOGGER.log(Level.SEVERE, "Error getting client transactions", e);
+    }
+    return resultSet;
+  }
+
   /*
    * Admin Section
    */
