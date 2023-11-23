@@ -168,7 +168,8 @@ public class Repository {
     try {
       statement = this.connection.createStatement();
       resultSet =
-          statement.executeQuery("SELECT * FROM Client WHERE PayeeAddress='" + payeeAddress + "';");
+          statement.executeQuery(
+              "SELECT * FROM Clients WHERE PayeeAddress='" + payeeAddress + "';");
     } catch (SQLException e) {
       LOGGER.log(Level.SEVERE, "Error searching client", e);
     }

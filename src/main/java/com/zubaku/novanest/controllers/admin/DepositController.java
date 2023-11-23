@@ -3,11 +3,15 @@ package com.zubaku.novanest.controllers.admin;
 import com.zubaku.novanest.models.Client;
 import com.zubaku.novanest.models.Model;
 import com.zubaku.novanest.processors.ClientCellFactory;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +22,7 @@ public class DepositController implements Initializable {
   public ListView<Client> resultListView;
   public TextField amountTextField;
   public Button depositButton;
+  public Label errorLabel;
 
   private Client client;
 
@@ -30,9 +35,19 @@ public class DepositController implements Initializable {
   private void onClientSearch() {
     ObservableList<Client> searchResults =
         Model.getInstance().searchClient(payeeAddressTextField.getText());
-    resultListView.setItems(searchResults);
-    resultListView.setCellFactory(param -> new ClientCellFactory());
-    client = searchResults.getFirst();
+    if (searchResults.isEmpty()) {
+      Timeline timeline =
+          new Timeline(
+              new KeyFrame(
+                  Duration.seconds(3),
+                  event -> errorLabel.setText("That user doesn't exist! Please try again.")));
+      timeline.play();
+      errorLabel.setText(null);
+    } else {
+      resultListView.setItems(searchResults);
+      resultListView.setCellFactory(param -> new ClientCellFactory());
+      client = searchResults.getFirst();
+    }
   }
 
   private void onDeposit() {
