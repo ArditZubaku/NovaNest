@@ -23,5 +23,14 @@ public class TransactionCellController implements Initializable {
   }
 
   @Override
-  public void initialize(URL location, ResourceBundle resources) {}
+  public void initialize(URL location, ResourceBundle resources) {
+    bindData();
+  }
+
+  private void bindData() {
+    transactionSenderLabel.textProperty().bind(transaction.senderProperty());
+    transactionReceiverLabel.textProperty().bind(transaction.receiverProperty());
+    transactionAmountLabel.textProperty().bind(transaction.amountProperty().asString());
+    transactionDateLabel.textProperty().bind(transaction.dateProperty().asString());
+  }
 }

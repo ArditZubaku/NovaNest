@@ -4,7 +4,6 @@ import com.zubaku.novanest.processors.ViewProcessor;
 import com.zubaku.novanest.repository.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +14,8 @@ public class Model {
   // Client data section
   private final Client client;
   private boolean clientLoggedInSuccessfully;
+  private final ObservableList<Transaction> latestTransactions;
+  private final ObservableList<Transaction> allTransactions;
 
   // Admin data section
   private boolean adminLoggedInSuccessfully;
@@ -28,6 +29,8 @@ public class Model {
     // Client data section
     this.clientLoggedInSuccessfully = false;
     this.client = new Client("", "", "", null, null, null);
+    this.latestTransactions = FXCollections.observableArrayList();
+    this.allTransactions = FXCollections.observableArrayList();
 
     // Admin data section
     this.adminLoggedInSuccessfully = false;
@@ -215,5 +218,48 @@ public class Model {
     }
 
     return searchResults;
+  }
+
+  private void prepareTransactions(ObservableList<Transaction> transactions, int limit) {
+    ResultSet resultSet =
+        repository.getClientTransactions(this.client.payeeAddressProperty().get(), limit);
+
+    try {
+      if (resultSet.isBeforeFirst()) {
+        while (resultSet.next()) {
+          String sender = resultSet.getString("Sender");
+          String receiver = resultSet.getString("Receiver");
+          double amount = resultSet.getDouble("Amount");
+          String[] dateArray = resultSet.getString("Date").split("-");
+          LocalDate date =
+              LocalDate.of(
+                  Integer.parseInt(dateArray[0]),
+                  Integer.parseInt(dateArray[1]),
+                  Integer.parseInt(dateArray[2]));
+          String message = resultSet.getString("Message");
+          transactions.add(new Transaction(sender, receiver, amount, date, message));
+        }
+      }
+
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public void setLatestTransactions() {
+    prepareTransactions(this.latestTransactions, 4);
+  }
+
+  public ObservableList<Transaction> getLatestTransactions() {
+    return latestTransactions;
+  }
+
+  public void setAllTransactions() {
+    // -1 -> returns all of them
+    prepareTransactions(this.allTransactions, -1);
+  }
+
+  public ObservableList<Transaction> getAllTransactions() {
+    return allTransactions;
   }
 }
