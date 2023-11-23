@@ -192,4 +192,28 @@ public class Model {
       throw new RuntimeException(e);
     }
   }
+
+  public ObservableList<Client> searchClient(String payeeAddress) {
+    ObservableList<Client> searchResults = FXCollections.observableArrayList();
+    ResultSet resultSet = repository.searchClient(payeeAddress);
+    try {
+      CheckingAccount checkingAccount = getCheckingAccount(payeeAddress);
+      SavingsAccount savingsAccount = getSavingsAccount(payeeAddress);
+      String firstName = resultSet.getString("FirstName");
+      String lastName = resultSet.getString("LastName");
+      String[] dateArray = resultSet.getString("Date").split("-");
+      LocalDate date =
+          LocalDate.of(
+              Integer.parseInt(dateArray[0]),
+              Integer.parseInt(dateArray[1]),
+              Integer.parseInt(dateArray[2]));
+      searchResults.add(
+          new Client(firstName, lastName, payeeAddress, checkingAccount, savingsAccount, date));
+
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+
+    return searchResults;
+  }
 }

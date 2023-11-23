@@ -1,5 +1,9 @@
 package com.zubaku.novanest.controllers.admin;
 
+import com.zubaku.novanest.models.Client;
+import com.zubaku.novanest.models.Model;
+import com.zubaku.novanest.processors.ClientCellFactory;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -11,10 +15,41 @@ import java.util.ResourceBundle;
 public class DepositController implements Initializable {
   public TextField payeeAddressTextField;
   public Button searchButton;
-  public ListView resultListView;
+  public ListView<Client> resultListView;
   public TextField amountTextField;
   public Button depositButton;
 
+  private Client client;
+
   @Override
-  public void initialize(URL location, ResourceBundle resources) {}
+  public void initialize(URL location, ResourceBundle resources) {
+    searchButton.setOnAction(event -> onClientSearch());
+    depositButton.setOnAction(event -> onDeposit());
+  }
+
+  private void onClientSearch() {
+    ObservableList<Client> searchResults =
+        Model.getInstance().searchClient(payeeAddressTextField.getText());
+    resultListView.setItems(searchResults);
+    resultListView.setCellFactory(param -> new ClientCellFactory());
+    client = searchResults.getFirst();
+  }
+
+  private void onDeposit() {
+    double amount = Double.parseDouble(amountTextField.getText());
+    double newBalance = amount + client.savingsAccountProperty().get().balanceProperty().get();
+
+    if (amountTextField.getText() != null) {
+      Model.getInstance()
+          .getRepository()
+          .depositSavings(client.payeeAddressProperty().get(), newBalance);
+    }
+
+    emptyFields();
+  }
+
+  private void emptyFields() {
+    payeeAddressTextField.setText(null);
+    amountTextField.setText(null);
+  }
 }
