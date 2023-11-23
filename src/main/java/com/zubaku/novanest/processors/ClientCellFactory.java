@@ -7,7 +7,7 @@ import javafx.scene.control.ListCell;
 
 import java.io.IOException;
 
-public class ClientCellProcessor extends ListCell<Client> {
+public class ClientCellFactory extends ListCell<Client> {
   @Override
   protected void updateItem(Client item, boolean empty) {
     super.updateItem(item, empty);

@@ -2,11 +2,11 @@ package com.zubaku.novanest.models;
 
 import com.zubaku.novanest.processors.ViewProcessor;
 import com.zubaku.novanest.repository.Repository;
-import com.zubaku.novanest.utils.enums.AccountType;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Model {
   private final ViewProcessor viewProcessor;
@@ -17,6 +17,7 @@ public class Model {
 
   // Admin data section
   private boolean adminLoggedInSuccessfully;
+  private final ObservableList<Client> clients;
 
   // Private constructor.
   private Model() {
@@ -29,6 +30,7 @@ public class Model {
 
     // Admin data section
     this.adminLoggedInSuccessfully = false;
+    this.clients = FXCollections.observableArrayList();
   }
 
   // Static inner class for holding the instance.
@@ -61,6 +63,10 @@ public class Model {
                   Integer.parseInt(dateArray[1]),
                   Integer.parseInt(dateArray[2]));
           this.client.createdDateProperty().set(date);
+          checkingAccount = getCheckingAccount(payeeAddress);
+          savingsAccount = getSavingsAccount(payeeAddress);
+          this.client.checkingAccountProperty().set(checkingAccount);
+          this.client.savingsAccountProperty().set(savingsAccount);
           this.clientLoggedInSuccessfully = true;
         }
       }
@@ -109,5 +115,80 @@ public class Model {
 
   public void setAdminLoggedInSuccessfully(boolean adminLoggedInSuccessfully) {
     this.adminLoggedInSuccessfully = adminLoggedInSuccessfully;
+  }
+
+  public CheckingAccount getCheckingAccount(String payeeAddress) {
+    CheckingAccount checkingAccount = null;
+    ResultSet resultSet = repository.getCheckingAccountData(payeeAddress);
+
+    try {
+      if (resultSet.isBeforeFirst()) {
+        while (resultSet.next()) {
+          String owner = resultSet.getString("Owner");
+          String accountNumber = resultSet.getString("AccountNumber");
+          int transactionLimit = resultSet.getInt("TransactionLimit");
+          double balance = resultSet.getDouble("Balance");
+          checkingAccount = new CheckingAccount(owner, accountNumber, balance, transactionLimit);
+        }
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+
+    return checkingAccount;
+  }
+
+  public SavingsAccount getSavingsAccount(String payeeAddress) {
+    SavingsAccount savingsAccount = null;
+    ResultSet resultSet = repository.getSavingsAccountData(payeeAddress);
+
+    try {
+      if (resultSet.isBeforeFirst()) {
+        while (resultSet.next()) {
+          String owner = resultSet.getString("Owner");
+          String accountNumber = resultSet.getString("AccountNumber");
+          double withdrawalLimit = resultSet.getDouble("WithdrawalLimit");
+          double balance = resultSet.getDouble("Balance");
+          savingsAccount = new SavingsAccount(owner, accountNumber, balance, withdrawalLimit);
+        }
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+
+    return savingsAccount;
+  }
+
+  public ObservableList<Client> getClients() {
+    return clients;
+  }
+
+  public void setClients() {
+    CheckingAccount checkingAccount;
+    SavingsAccount savingsAccount;
+
+    ResultSet allClientsData = repository.getAllClientsData();
+
+    try {
+      if (allClientsData.isBeforeFirst()) {
+        while (allClientsData.next()) {
+          String firstName = allClientsData.getString("FirstName");
+          String lastName = allClientsData.getString("LastName");
+          String payeeAddress = allClientsData.getString("PayeeAddress");
+          String[] dateArray = allClientsData.getString("Date").split("-");
+          LocalDate date =
+              LocalDate.of(
+                  Integer.parseInt(dateArray[0]),
+                  Integer.parseInt(dateArray[1]),
+                  Integer.parseInt(dateArray[2]));
+          checkingAccount = getCheckingAccount(payeeAddress);
+          savingsAccount = getSavingsAccount(payeeAddress);
+          clients.add(
+              new Client(firstName, lastName, payeeAddress, checkingAccount, savingsAccount, date));
+        }
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
   }
 }

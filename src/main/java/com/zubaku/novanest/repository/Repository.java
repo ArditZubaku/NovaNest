@@ -148,7 +148,7 @@ public class Repository {
    */
   public int getLastClientsID() {
     Statement statement;
-    ResultSet resultSet = null;
+    ResultSet resultSet;
     int id = 0;
     try {
       statement = this.connection.createStatement();
@@ -167,7 +167,7 @@ public class Repository {
       statement = this.connection.createStatement();
       resultSet =
           statement.executeQuery(
-              "SELECT * FROM CheckingAccounts WHERE Owners = '" + payeeAddress + "'");
+              "SELECT * FROM CheckingAccounts WHERE Owner = '" + payeeAddress + "'");
     } catch (SQLException e) {
       LOGGER.log(Level.SEVERE, "Error getting checking account data", e);
     }
@@ -181,7 +181,7 @@ public class Repository {
       statement = this.connection.createStatement();
       resultSet =
           statement.executeQuery(
-              "SELECT * FROM SavingsAccounts WHERE Owners = '" + payeeAddress + "'");
+              "SELECT * FROM SavingsAccounts WHERE Owner = '" + payeeAddress + "'");
     } catch (SQLException e) {
       LOGGER.log(Level.SEVERE, "Error getting checking account data", e);
     }
