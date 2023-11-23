@@ -131,6 +131,18 @@ public class Repository {
     }
   }
 
+  public ResultSet getAllClientsData() {
+    Statement statement;
+    ResultSet resultSet = null;
+    try {
+      statement = this.connection.createStatement();
+      resultSet = statement.executeQuery("SELECT * FROM Clients");
+    } catch (SQLException e) {
+      LOGGER.log(Level.SEVERE, "Error getting all clients data", e);
+    }
+    return resultSet;
+  }
+
   /*
    * Utility methods
    */
