@@ -157,6 +157,21 @@ public class Repository {
     return resultSet;
   }
 
+  public void depositSavings(String payeeAddress, double amount) {
+    Statement statement;
+    try {
+      statement = this.connection.createStatement();
+      statement.executeUpdate(
+          "UPDATE SavingsAccounts SET Balance = "
+              + amount
+              + " WHERE PayeeAddress = '"
+              + payeeAddress
+              + "'");
+    } catch (SQLException e) {
+      LOGGER.log(Level.SEVERE, "Error depositing savings", e);
+    }
+  }
+
   /*
    * Utility methods
    */
