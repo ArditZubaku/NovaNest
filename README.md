@@ -26,7 +26,7 @@ The project is organized into several packages and resources:
 
 ## Prerequisites
 
-- Java JDK 17 (personally used version 17.0.21)
+- Java JDK 17 (personally used version 21 - OpenJDK Runtime Environment (build 21+35))
 - Maven 3.6.3 or later
 
 ## Setup and Installation
